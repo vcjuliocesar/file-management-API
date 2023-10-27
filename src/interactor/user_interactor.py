@@ -16,10 +16,24 @@ class UserInteractor:
         
         return self.user_repository.create(User(**user.dict()))
     
-    def update(self,user:User) -> User:
+    def update(self,user_id:int,user_data:UserSchema) -> User:
+        
+        user = self.user_repository.find_by_id(user_id)
+        
+        user.name = user_data.name
+        
+        user.email = user_data.email
+        
+        user.password = user_data.password
+        
+        user.is_active = user_data.is_active
+        
+        user.is_admin = user_data.is_admin
         
         return self.user_repository.update(user)
     
-    def delete(self,user:User) -> None:
+    def delete(self,user_id:int) -> None:
+        
+        user = self.find_by_id(user_id)
         
         return self.user_repository.delete(user)

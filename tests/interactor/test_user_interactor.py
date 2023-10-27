@@ -23,7 +23,7 @@ class TestUserInteractor(unittest.TestCase):
         self.assertEqual("Jhon Doe",user_entity.name)
         self.assertEqual("jhon.doe@example.com",user_entity.email)
         
-        user_interactor.delete(user_entity)
+        user_interactor.delete(user_entity.id)
 
     def test_it_can_find_user_by_id(self):
         
@@ -44,7 +44,7 @@ class TestUserInteractor(unittest.TestCase):
         self.assertEqual("Jhon Doe",user.name)
         self.assertEqual("jhon.doe@example.com",user.email)
         
-        user_interactor.delete(user_entity)
+        user_interactor.delete(user_entity.id)
         
     def test_it_can_update_user(self):
         
@@ -68,13 +68,13 @@ class TestUserInteractor(unittest.TestCase):
         user.is_active = False
         user.is_admin = user_schema.is_admin
         
-        new_user = user_interactor.update(user)
+        new_user = user_interactor.update(user.id,user)
         
         self.assertEqual("Jhane Doe",new_user.name)
         self.assertEqual("new.jhane.doe@example.com",new_user.email)
         self.assertFalse(new_user.is_active)
         
-        user_interactor.delete(new_user)
+        user_interactor.delete(new_user.id)
         
 if __name__ == "__main__" :
     
