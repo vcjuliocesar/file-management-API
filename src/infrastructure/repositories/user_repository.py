@@ -8,6 +8,10 @@ class UserRepository(UserInterface):
         
         self.db = Session()
     
+    def find_by_id(self,user_id:int) -> User:
+        
+        return self.db.query(User).filter(User.id == user_id).first()
+        
     def get(self,user:User) -> User:
         pass
     
@@ -20,4 +24,15 @@ class UserRepository(UserInterface):
         return user
     
     def update(self, user:User) -> User:
-        pass
+        
+        self.db.commit()
+        
+        self.db.refresh(user)
+        
+        return user
+    
+    def delete(self,user:User) -> None:
+        
+        self.db.delete(user)
+        
+        self.db.commit()
