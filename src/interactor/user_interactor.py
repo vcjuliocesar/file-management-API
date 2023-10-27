@@ -8,6 +8,6 @@ class UserInteractor:
         
         self.user_repository = UserRepository()
          
-    def create(self,user:UserSchema):
+    def create(self,user:UserSchema) -> User:
         
         return self.user_repository.create(User(**user.dict()))

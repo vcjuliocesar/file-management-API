@@ -3,11 +3,11 @@ from typing import Optional
 
 class UserPostRequest(BaseModel):
     
-    name:str = Field(title="Name")
+    name:str = Field("Jhon Doe",title="Name")
     
-    email:str = Field(title="Email")
+    email:str = Field("jhon.doe@example.com",title="Email")
     
-    password:str = Field(title="Password")
+    password:str = Field("MySecretPassword_123",title="Password")
 
 class UserSchema(UserPostRequest):
     
