@@ -1,5 +1,7 @@
-from src.infrastructure.repositories.user_repository import UserRepository
 from src.domain.models.user_entity import UserEntity as User
+from src.domain.exceptions.user_already_exists_exception import UserAlreadyExistsException
+from src.domain.exceptions.user_not_found_exception import UserNotFoundException
+from src.infrastructure.repositories.user_repository import UserRepository
 from src.infrastructure.schemas.user_schema import UserSchema
 
 class UserService:
@@ -22,9 +24,21 @@ class UserService:
         
     def create(self,user:UserSchema) -> User:
         
+        exist = self.user_repository.find_one({"email":user.email})
+        
+        if exist:
+            
+            raise UserAlreadyExistsException()
+        
         return self.user_repository.create(User(**user.dict()))
     
     def update(self,user_id:int,user_data:UserSchema) -> User:
+        
+        exist = self.user_repository.find_by_id(user_id)
+        
+        if not exist:
+            
+             raise UserNotFoundException()
         
         user = self.user_repository.find_by_id(user_id)
         
@@ -41,6 +55,12 @@ class UserService:
         return self.user_repository.update(user)
     
     def delete(self,user_id:int) -> None:
+        
+        exist = self.user_repository.find_by_id(user_id)
+        
+        if not exist:
+            
+            raise UserNotFoundException()
         
         user = self.find_by_id(user_id)
         
