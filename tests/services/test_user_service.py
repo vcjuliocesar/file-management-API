@@ -1,9 +1,47 @@
 import unittest
 from src.domain.models.user_entity import UserEntity
+from src.domain.exceptions.user_already_exists_exception import UserAlreadyExistsException
+from src.domain.exceptions.user_not_found_exception import UserNotFoundException
 from src.infrastructure.schemas.user_schema import UserSchema
 from src.services.user_service import UserService
 
 class TestUserService(unittest.TestCase):
+    
+    def test_it_retun_an_exception_if_user_already_exists(self):
+        
+        user_service = UserService()
+        
+        user_schema = UserSchema(
+            name="Jhon Doe",
+            email="jhon.doe@example.com",
+            password="MySr3cr3tP4ssw0rd_123",
+            is_active=True,
+            is_admin=False
+        )
+        
+        user_entity = user_service.create(user_schema)
+        
+        with self.assertRaises(UserAlreadyExistsException):
+            
+            new_user_schema = UserSchema(
+                name="Jhon Doe",
+                email="jhon.doe@example.com",
+                password="MySr3cr3tP4ssw0rd_123",
+                is_active=True,
+                is_admin=False
+            )
+        
+            user_service.create(new_user_schema)
+            
+        user_service.delete(user_entity.id)
+        
+    def test_it_return_an_exception_is_user_not_exists(self):
+         
+        user_service = UserService()
+        
+        with self.assertRaises(UserNotFoundException):
+            
+            user_service.update(1,UserEntity())
     
     def test_it_can_create_user(self):
         
