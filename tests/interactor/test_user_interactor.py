@@ -24,7 +24,27 @@ class TestUserInteractor(unittest.TestCase):
         self.assertEqual("jhon.doe@example.com",user_entity.email)
         
         user_interactor.delete(user_entity.id)
-
+    
+    def test_it_retun_all_users(self):
+        
+        user_interactor = UserInteractor() 
+        
+        user_schema = UserSchema(
+            name="Jhon Doe",
+            email="jhon.doe@example.com",
+            password="MySr3cr3tP4ssw0rd_123",
+            is_active=True,
+            is_admin=False
+        )
+        
+        user_entity = user_interactor.create(user_schema)
+        
+        users = user_interactor.get_all()
+        
+        self.assertTrue(isinstance(users,list))
+        
+        user_interactor.delete(user_entity.id)
+    
     def test_it_can_find_user_by_id(self):
         
         user_interactor = UserInteractor() 
@@ -45,7 +65,41 @@ class TestUserInteractor(unittest.TestCase):
         self.assertEqual("jhon.doe@example.com",user.email)
         
         user_interactor.delete(user_entity.id)
+    
+    def test_it_find_a_user_by_criteria_and_return_one_result(self):
         
+        user_interactor = UserInteractor()
+        
+        user_schema1 = UserSchema(
+            name="Jhon Doe",
+            email="jhon.doe@example.com",
+            password="MySr3cr3tP4ssw0rd_123",
+            is_active=True,
+            is_admin=False
+        )
+        
+        user_schema2 = UserSchema(
+            name="Jhanne Doe",
+            email="jhanne.doe@example.com",
+            password="MySr3cr3tP4ssw0rd_123",
+            is_active=True,
+            is_admin=False
+        )
+        
+        user_entity1 = user_interactor.create(user_schema1)
+
+        user_entity2 = user_interactor.create(user_schema2)
+
+        user = user_interactor.find_one({"name":"Jhon Doe","email":"jhon.doe@example.com"})
+        
+        self.assertEqual("Jhon Doe",user.name)
+        
+        self.assertEqual("jhon.doe@example.com",user.email)
+        
+        user_interactor.delete(user_entity1.id)
+        
+        user_interactor.delete(user_entity2.id)
+    
     def test_it_can_update_user(self):
         
         user_interactor = UserInteractor() 

@@ -8,9 +8,17 @@ class UserInteractor:
         
         self.user_repository = UserRepository()
     
+    def get_all(self) -> list:
+        
+        return self.user_repository.get()
+    
     def find_by_id(self,user_id:int):
         
         return self.user_repository.find_by_id(user_id)
+    
+    def find_one(self,criteria:dict) -> list:
+        
+        return self.user_repository.find_one(criteria)
         
     def create(self,user:UserSchema) -> User:
         

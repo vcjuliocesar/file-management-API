@@ -8,7 +8,11 @@ class UserInterface(ABC):
         pass
     
     @abstractmethod
-    def get(self,user:User) -> User:
+    def find_one(self,crieria:dict) -> User:
+        pass
+    
+    @abstractmethod
+    def get(self) -> User:
         pass
     
     @abstractmethod

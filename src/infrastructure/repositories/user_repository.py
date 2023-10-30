@@ -11,9 +11,14 @@ class UserRepository(UserInterface):
     def find_by_id(self,user_id:int) -> User:
         
         return self.db.query(User).filter(User.id == user_id).first()
+    
+    def find_one(self,criteria:dict) -> User:
         
-    def get(self,user:User) -> User:
-        pass
+        return self.db.query(User).filter_by(**criteria).first()
+    
+    def get(self) -> list:
+        
+        return self.db.query(User).all()
     
     def create(self,user:User) -> User:
         
