@@ -2,7 +2,7 @@ from src.infrastructure.repositories.user_repository import UserRepository
 from src.domain.models.user_entity import UserEntity as User
 from src.infrastructure.schemas.user_schema import UserSchema
 
-class UserInteractor:
+class UserService:
     
     def __init__(self) -> None:
         
