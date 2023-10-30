@@ -1,7 +1,9 @@
 from fastapi import FastAPI
-from src.infrastructure.configs.database import engine,Base
-
+from src.domain.models.base_entity import init
+from src.app.routers.api.user import user_router
 
 app = FastAPI()
 
-Base.metadata.create_all(bind=engine)
+app.include_router(user_router)
+
+init()
