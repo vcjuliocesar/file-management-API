@@ -30,7 +30,7 @@ class UserService:
             
             raise UserAlreadyExistsException()
         
-        return self.user_repository.create(User(**user.dict()))
+        return self.user_repository.create(User(**user.model_dump()))
     
     def update(self,user_id:int,user_data:UserSchema) -> User:
         
