@@ -1,11 +1,11 @@
-import unittest
+import pytest
 from src.domain.models.user_entity import UserEntity
 from src.domain.exceptions.user_already_exists_exception import UserAlreadyExistsException
 from src.domain.exceptions.user_not_found_exception import UserNotFoundException
 from src.infrastructure.schemas.user_schema import UserSchema
 from src.services.user_service import UserService
 
-class TestUserService(unittest.TestCase):
+class TestUserService():
     
     def test_it_retun_an_exception_if_user_already_exists(self):
         
@@ -21,7 +21,7 @@ class TestUserService(unittest.TestCase):
         
         user_entity = user_service.create(user_schema)
         
-        with self.assertRaises(UserAlreadyExistsException):
+        with pytest.raises(UserAlreadyExistsException):
             
             new_user_schema = UserSchema(
                 name="Jhon Doe",
@@ -39,7 +39,7 @@ class TestUserService(unittest.TestCase):
          
         user_service = UserService()
         
-        with self.assertRaises(UserNotFoundException):
+        with pytest.raises(UserNotFoundException):
             
             user_service.update(1,UserEntity())
     
@@ -57,9 +57,9 @@ class TestUserService(unittest.TestCase):
         
         user_entity = user_service.create(user_schema)
         
-        self.assertTrue(isinstance(user_entity,UserEntity))
-        self.assertEqual("Jhon Doe",user_entity.name)
-        self.assertEqual("jhon.doe@example.com",user_entity.email)
+        assert isinstance(user_entity,UserEntity)
+        assert user_entity.name == "Jhon Doe"
+        assert user_entity.email == "jhon.doe@example.com"
         
         user_service.delete(user_entity.id)
     
@@ -79,7 +79,7 @@ class TestUserService(unittest.TestCase):
         
         users = user_service.get_all()
         
-        self.assertTrue(isinstance(users,list))
+        assert isinstance(users,list)
         
         user_service.delete(user_entity.id)
     
@@ -99,8 +99,8 @@ class TestUserService(unittest.TestCase):
         
         user = user_service.find_by_id(user_entity.id)
         
-        self.assertEqual("Jhon Doe",user.name)
-        self.assertEqual("jhon.doe@example.com",user.email)
+        assert user.name == "Jhon Doe"
+        assert user.email == "jhon.doe@example.com"
         
         user_service.delete(user_entity.id)
     
@@ -130,9 +130,9 @@ class TestUserService(unittest.TestCase):
 
         user = user_service.find_one({"name":"Jhon Doe","email":"jhon.doe@example.com"})
         
-        self.assertEqual("Jhon Doe",user.name)
+        assert user.name == "Jhon Doe"
         
-        self.assertEqual("jhon.doe@example.com",user.email)
+        assert user.email == "jhon.doe@example.com"
         
         user_service.delete(user_entity1.id)
         
@@ -162,12 +162,9 @@ class TestUserService(unittest.TestCase):
         
         new_user = user_service.update(user.id,user)
         
-        self.assertEqual("Jhane Doe",new_user.name)
-        self.assertEqual("new.jhane.doe@example.com",new_user.email)
-        self.assertFalse(new_user.is_active)
+        assert new_user.name == "Jhane Doe"
+        assert new_user.email == "new.jhane.doe@example.com"
+        assert not new_user.is_active
         
         user_service.delete(new_user.id)
         
-if __name__ == "__main__" :
-    
-    unittest.main()
