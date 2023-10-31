@@ -6,13 +6,13 @@ class GetAllUsersUseCase:
     
     def __init__(self) -> None:
         
-        self.user_interactor = UserService()
+        self.user_service = UserService()
         
     def execute(self) -> list:
         
         try:
             
-            return self.user_interactor.get_all()
+            return self.user_service.get_all()
         
         except Exception as error:
         

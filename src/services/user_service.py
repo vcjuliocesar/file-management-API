@@ -2,7 +2,7 @@ from src.domain.models.user_entity import UserEntity as User
 from src.domain.exceptions.user_already_exists_exception import UserAlreadyExistsException
 from src.domain.exceptions.user_not_found_exception import UserNotFoundException
 from src.infrastructure.repositories.user_repository import UserRepository
-from src.infrastructure.schemas.user_schema import UserSchema
+from src.infrastructure.schemas.user_schema import UserSchema,UserPostRequest
 
 class UserService:
     
