@@ -45,7 +45,7 @@ async def get_by_id(id:int,user_case:FindByIdUserUseCase = Depends()):
         raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,detail=str(error))
     
 @user_router.put("/users",response_model=UserSchema,status_code=status.HTTP_200_OK)
-async def update(id:int,user:UserPostRequest,user_case:UpdateUserUseCase = Depends()):
+async def update(id:int,user:UserSchema,user_case:UpdateUserUseCase = Depends()):
     
     try:
         

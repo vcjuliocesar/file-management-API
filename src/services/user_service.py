@@ -32,7 +32,7 @@ class UserService:
         
         return self.user_repository.create(User(**user.dict()))
     
-    def update(self,user_id:int,user_data:UserPostRequest) -> User:
+    def update(self,user_id:int,user_data:UserSchema) -> User:
         
         exist = self.user_repository.find_by_id(user_id)
         
@@ -48,9 +48,9 @@ class UserService:
         
         user.password = user_data.password
         
-        #user.is_active = user_data.is_active
+        user.is_active = user_data.is_active
         
-        #user.is_admin = user_data.is_admin
+        user.is_admin = user_data.is_admin
         
         return self.user_repository.update(user)
     

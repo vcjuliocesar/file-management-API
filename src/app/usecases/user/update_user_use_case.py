@@ -8,7 +8,7 @@ class UpdateUserUseCase:
         
         self.user_service = UserService()
         
-    def execute(self,user_id:int,user_data:UserPostRequest) -> User:
+    def execute(self,user_id:int,user_data:UserSchema) -> User:
         
         try:
             
