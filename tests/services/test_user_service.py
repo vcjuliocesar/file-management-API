@@ -7,19 +7,25 @@ from src.services.user_service import UserService
 
 class TestUserService():
     
-    def test_it_retun_an_exception_if_user_already_exists(self):
+    @pytest.fixture
+    def user_service(self):
         
-        user_service = UserService()
+        return UserService()
+    
+    @pytest.fixture
+    def create_user(self):
         
-        user_schema = UserSchema(
+        return UserSchema(
             name="Jhon Doe",
             email="jhon.doe@example.com",
             password="MySr3cr3tP4ssw0rd_123",
             is_active=True,
             is_admin=False
         )
+    
+    def test_it_retun_an_exception_if_user_already_exists(self,user_service,create_user):
         
-        user_entity = user_service.create(user_schema)
+        user_entity = user_service.create(create_user)
         
         with pytest.raises(UserAlreadyExistsException):
             
@@ -35,27 +41,15 @@ class TestUserService():
             
         user_service.delete(user_entity.id)
         
-    def test_it_return_an_exception_is_user_not_exists(self):
-         
-        user_service = UserService()
+    def test_it_return_an_exception_is_user_not_exists(self,user_service):
         
         with pytest.raises(UserNotFoundException):
             
             user_service.update(1,UserEntity())
     
-    def test_it_can_create_user(self):
+    def test_it_can_create_user(self,user_service,create_user):
         
-        user_service = UserService() 
-        
-        user_schema = UserSchema(
-            name="Jhon Doe",
-            email="jhon.doe@example.com",
-            password="MySr3cr3tP4ssw0rd_123",
-            is_active=True,
-            is_admin=False
-        )
-        
-        user_entity = user_service.create(user_schema)
+        user_entity = user_service.create(create_user)
         
         assert isinstance(user_entity,UserEntity)
         assert user_entity.name == "Jhon Doe"
@@ -63,19 +57,9 @@ class TestUserService():
         
         user_service.delete(user_entity.id)
     
-    def test_it_retun_all_users(self):
+    def test_it_retun_all_users(self,user_service,create_user):
         
-        user_service = UserService() 
-        
-        user_schema = UserSchema(
-            name="Jhon Doe",
-            email="jhon.doe@example.com",
-            password="MySr3cr3tP4ssw0rd_123",
-            is_active=True,
-            is_admin=False
-        )
-        
-        user_entity = user_service.create(user_schema)
+        user_entity = user_service.create(create_user)
         
         users = user_service.get_all()
         
@@ -83,19 +67,9 @@ class TestUserService():
         
         user_service.delete(user_entity.id)
     
-    def test_it_can_find_user_by_id(self):
-        
-        user_service = UserService() 
-        
-        user_schema = UserSchema(
-            name="Jhon Doe",
-            email="jhon.doe@example.com",
-            password="MySr3cr3tP4ssw0rd_123",
-            is_active=True,
-            is_admin=False
-        )
-        
-        user_entity = user_service.create(user_schema)
+    def test_it_can_find_user_by_id(self,user_service,create_user):
+         
+        user_entity = user_service.create(create_user)
         
         user = user_service.find_by_id(user_entity.id)
         
@@ -104,18 +78,8 @@ class TestUserService():
         
         user_service.delete(user_entity.id)
     
-    def test_it_find_a_user_by_criteria_and_return_one_result(self):
-        
-        user_service = UserService()
-        
-        user_schema1 = UserSchema(
-            name="Jhon Doe",
-            email="jhon.doe@example.com",
-            password="MySr3cr3tP4ssw0rd_123",
-            is_active=True,
-            is_admin=False
-        )
-        
+    def test_it_find_a_user_by_criteria_and_return_one_result(self,user_service,create_user):
+         
         user_schema2 = UserSchema(
             name="Jhanne Doe",
             email="jhanne.doe@example.com",
@@ -124,7 +88,7 @@ class TestUserService():
             is_admin=False
         )
         
-        user_entity1 = user_service.create(user_schema1)
+        user_entity1 = user_service.create(create_user)
 
         user_entity2 = user_service.create(user_schema2)
 
@@ -138,27 +102,17 @@ class TestUserService():
         
         user_service.delete(user_entity2.id)
     
-    def test_it_can_update_user(self):
-        
-        user_service = UserService() 
-        
-        user_schema = UserSchema(
-            name="Jhon Doe",
-            email="jhon.doe@example.com",
-            password="MySr3cr3tP4ssw0rd_123",
-            is_active=True,
-            is_admin=False
-        )
-        
-        user_entity = user_service.create(user_schema)
+    def test_it_can_update_user(self,user_service,create_user):
+         
+        user_entity = user_service.create(create_user)
         
         user = user_service.find_by_id(user_entity.id)
         
         user.name = "Jhane Doe"
         user.email = "new.jhane.doe@example.com"
-        user.password = user_schema.password
+        user.password = create_user.password
         user.is_active = False
-        user.is_admin = user_schema.is_admin
+        user.is_admin = create_user.is_admin
         
         new_user = user_service.update(user.id,user)
         
