@@ -5,13 +5,13 @@ class DeleteUserUseCase:
     
     def __init__(self) -> None:
         
-        self.user_interactor = UserService()
+        self.user_service = UserService()
         
     def execute(self,user_id:int) -> None:
         
         try:
         
-            return self.user_interactor.delete(user_id)
+            return self.user_service.delete(user_id)
         
         except Exception as error:
             

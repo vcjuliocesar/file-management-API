@@ -2,7 +2,7 @@ from src.domain.models.user_entity import UserEntity as User
 from src.domain.exceptions.user_already_exists_exception import UserAlreadyExistsException
 from src.domain.exceptions.user_not_found_exception import UserNotFoundException
 from src.infrastructure.repositories.user_repository import UserRepository
-from src.infrastructure.schemas.user_schema import UserSchema
+from src.infrastructure.schemas.user_schema import UserSchema,UserPostRequest
 
 class UserService:
     
@@ -32,7 +32,7 @@ class UserService:
         
         return self.user_repository.create(User(**user.dict()))
     
-    def update(self,user_id:int,user_data:UserSchema) -> User:
+    def update(self,user_id:int,user_data:UserPostRequest) -> User:
         
         exist = self.user_repository.find_by_id(user_id)
         
@@ -48,9 +48,9 @@ class UserService:
         
         user.password = user_data.password
         
-        user.is_active = user_data.is_active
+        #user.is_active = user_data.is_active
         
-        user.is_admin = user_data.is_admin
+        #user.is_admin = user_data.is_admin
         
         return self.user_repository.update(user)
     

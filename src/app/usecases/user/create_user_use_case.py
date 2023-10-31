@@ -6,13 +6,13 @@ class CreateUserUseCase:
     
     def __init__(self) -> None:
         
-        self.user_interactor = UserService()
+        self.user_service = UserService()
         
     def execute(self,user_data:UserPostRequest) -> User:
         
         try:
             
-            return self.user_interactor.create(user_data)
+            return self.user_service.create(user_data)
         
         except Exception as error:
         

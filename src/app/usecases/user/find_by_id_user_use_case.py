@@ -6,13 +6,13 @@ class FindByIdUserUseCase:
     
     def __init__(self) -> None:
         
-        self.user_interactor = UserService()
+        self.user_service = UserService()
         
     def execute(self,user_id:int) -> User:
         
         try:
             
-            return self.user_interactor.find_by_id(user_id)
+            return self.user_service.find_by_id(user_id)
         
         except Exception as error:
         
