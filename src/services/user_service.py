@@ -2,7 +2,8 @@ from src.domain.models.user_entity import UserEntity as User
 from src.domain.exceptions.user_already_exists_exception import UserAlreadyExistsException
 from src.domain.exceptions.user_not_found_exception import UserNotFoundException
 from src.infrastructure.repositories.user_repository import UserRepository
-from src.infrastructure.schemas.user_schema import UserSchema,UserPostRequest
+from src.infrastructure.schemas.user_schema import UserSchema
+from src.infrastructure.utils.password_utils import PasswordUtils
 
 class UserService:
     
@@ -29,6 +30,8 @@ class UserService:
         if exist:
             
             raise UserAlreadyExistsException()
+        
+        user.password = PasswordUtils().hash_password(user.password)
         
         return self.user_repository.create(User(**user.model_dump()))
     
