@@ -37,13 +37,11 @@ class UserService:
     
     def update(self,user_id:int,user_data:UserSchema) -> User:
         
-        exist = self.user_repository.find_by_id(user_id)
+        user = self.user_repository.find_by_id(user_id)
         
-        if not exist:
+        if not user:
             
              raise UserNotFoundException()
-        
-        user = self.user_repository.find_by_id(user_id)
         
         user.name = user_data.name
         
@@ -59,12 +57,10 @@ class UserService:
     
     def delete(self,user_id:int) -> None:
         
-        exist = self.user_repository.find_by_id(user_id)
-        
-        if not exist:
-            
-            raise UserNotFoundException()
-        
         user = self.find_by_id(user_id)
         
+        if not user:
+            
+            raise UserNotFoundException()
+         
         return self.user_repository.delete(user)

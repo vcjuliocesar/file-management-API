@@ -13,3 +13,5 @@ class PasswordUtils():
     def verify_password(self,password:str,hash:str):
     
         return self.pwd_context.verify(password,hash)
+    
+    
