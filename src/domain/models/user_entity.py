@@ -1,5 +1,6 @@
 from src.domain.models.base_entity import EntityBase
 from sqlalchemy import Integer,String,Column,Boolean
+from sqlalchemy.orm import relationship
 
 class UserEntity(EntityBase):
     
@@ -16,3 +17,5 @@ class UserEntity(EntityBase):
     is_active = Column(Boolean,default=True)
     
     is_admin = Column(Boolean,default=False)
+    
+    files = relationship("FileEntity",back_populates="owner")
