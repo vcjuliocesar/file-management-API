@@ -12,6 +12,10 @@ class UserRepository(UserInterface):
         
         return self.db.query(User).filter(User.id == user_id).first()
     
+    def find_by_email(self,user:User) -> User:
+        
+        return self.db.query(User).filter(User.email == user.email).first()
+    
     def find_one(self,criteria:dict) -> User:
         
         return self.db.query(User).filter_by(**criteria).first()
