@@ -8,11 +8,11 @@ class CreateFileUseCase:
         
         self.file_service = FileService()
         
-    def execute(self,name:str,description:str,file) -> File:
+    def execute(self,name:str,description:str,file,token:str) -> File:
         
         try:
             
-            return self.file_service.create(name,description,file)
+            return self.file_service.create(name,description,file,token)
         
         except Exception as error:
         

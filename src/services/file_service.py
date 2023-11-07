@@ -1,8 +1,10 @@
+import os
 from src.domain.models.file_entity import FileEntity as File
 from src.domain.exceptions.user_already_exists_exception import UserAlreadyExistsException
 from src.domain.exceptions.user_not_found_exception import UserNotFoundException
 from src.domain.exceptions.file_already_exists_exception import FileAlreadyExistsException
 from src.domain.exceptions.file_not_found_exception import FileNotFoundException
+from src.domain.exceptions.file_no_allowed_exception import FileNoAllowedException
 from src.infrastructure.repositories.file_repository import FileRepository
 from src.infrastructure.schemas.file_schema import FileSchema
 from src.infrastructure.validations.file_validation import *
@@ -25,13 +27,13 @@ class FileService:
         
         return self.file_repository.find_one(criteria)
         
-    def create(self,name,description,file) -> File:
+    def create(self,name,description,file,token) -> File:
         
         file_schema = FileSchema(
             name=name,
             path=file.filename,
             description=description,
-            owner_id=1)
+            owner_id=token.id)
         
         exist = self.file_repository.find_one({"name":file_schema.name})
         
@@ -41,11 +43,17 @@ class FileService:
         
         if not allowed_file(file_schema.path):
             
-           raise FileNotFoundException()
+           raise FileNoAllowedException()
         
         new_file_name = new_filename(file_schema.name,file_schema.path)
         
-        file_path = os.path.join(UPLOAD_DIR,new_file_name)
+        UPLOAD_DIR = "uploads"
+        
+        USER_DIR = token.name.replace(" ","_").lower()
+        
+        os.makedirs(os.path.join(UPLOAD_DIR,USER_DIR),exist_ok=True)
+        
+        file_path = os.path.join(UPLOAD_DIR,USER_DIR,new_file_name)
         
         with open(file_path,"wb") as uploaded_file:
             

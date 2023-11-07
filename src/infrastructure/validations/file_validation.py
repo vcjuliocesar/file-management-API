@@ -1,8 +1,8 @@
-import os
+# import os
 
-UPLOAD_DIR = "uploads"
+# UPLOAD_DIR = "uploads"
 
-os.makedirs(UPLOAD_DIR,exist_ok=True)
+# os.makedirs(UPLOAD_DIR,exist_ok=True)
 
 ALLOWED_EXTENSIONS = {'jpg', 'jpeg', 'png', 'gif', 'xlsx', 'xls', 'doc', 'docx', 'pdf'}
 
