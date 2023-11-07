@@ -178,4 +178,4 @@ pyrightconfig.json
 #local database
 **/*.sqlite
 
-uploads/*.*
+uploads/*
