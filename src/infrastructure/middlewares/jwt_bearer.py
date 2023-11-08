@@ -18,20 +18,20 @@ class JWTBearer(HTTPBearer) :
             
             auth = await super().__call__(request)
             
-            credentials = validate_token(auth.credentials)
+            credential = validate_token(auth.credentials)
             
-            expire = datetime.fromtimestamp(credentials['exp'])
+            expire = datetime.fromtimestamp(credential['exp'])
             
-            user = self.user_service.find_one({"email":credentials["email"]})
+            user = self.user_service.find_one({"email":credential['email']})
             
             if not user:
                 
-                raise get_http_exception(InvalidCredentialsException())
+                raise InvalidCredentialsException()
             
-            if expire is None or datetime.utcnow() > expire:
+            if expire is None:
                 
-                raise get_http_exception(InvalidCredentialsException())
-
+                raise InvalidCredentialsException()
+            
             return user
     
         except Exception as error:

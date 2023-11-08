@@ -4,6 +4,10 @@ from src.domain.models.user_entity import UserEntity as User
 class UserInterface(ABC):
     
     @abstractmethod
+    def find_by_email(self,user:User) -> User:
+        pass
+
+    @abstractmethod
     def find_by_id(self,user_id:int) -> User:
         pass
     

@@ -3,19 +3,19 @@ from datetime import datetime,timedelta
 
 def create_token(data:dict) -> dict:
     
-    payload = __expire_token(data)
+    payload = expire_token(data)
     
-    token:str = encode(payload,"Mysecr3tK4y",algorithm="HS256")
+    token:str = encode(payload,key="Mysecr3tK4y",algorithm="HS256")
     
     return token
 
 def validate_token(token:str) -> dict :
     
-    data:dict = decode(token,key="Mysecr3tK4y",algorithm="HS256")
+    data:dict = decode(token,key="Mysecr3tK4y",algorithms=["HS256"])
     
     return data
 
-def __expire_token(data:dict):
+def expire_token(data:dict):
     
     to_encode = data.copy()
     
