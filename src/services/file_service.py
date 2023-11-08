@@ -15,13 +15,13 @@ class FileService:
         
         self.file_repository = FileRepository()
     
-    def get_all(self) -> list:
+    def get_all(self,owner:int) -> list:
         
-        return self.file_repository.get()
+        return self.file_repository.get(owner)
     
-    def find_by_id(self,file_id:int):
+    def find_by_id(self,file_id:int,token):
         
-        return self.file_repository.find_by_id(file_id)
+        return self.file_repository.find_by_id(file_id,token)
  
     def find_one(self,criteria:dict) -> list:
         
@@ -75,12 +75,16 @@ class FileService:
         
         # return self.file_repository.update(file)
     
-    def delete(self,file_id:int) -> None:
+    def delete(self,file_id:int,owner) -> None:
         
-        file = self.find_by_id(file_id)
+        file = self.find_by_id(file_id,owner)
         
         if not file:
             
             raise FileNotFoundException()
-         
+        
+        if os.path.exists(f"./{file.path}"):
+            
+            os.remove(f"./{file.path}")
+            
         return self.file_repository.delete(file)

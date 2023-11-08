@@ -1,5 +1,5 @@
 from src.infrastructure.repositories.interfaces.file_interface import FileInterface
-from src.domain.models.file_entity import FileEntity as File
+from src.domain.models.file_entity import FileEntity
 from src.infrastructure.configs.database import Session
 
 class FileRepository(FileInterface):
@@ -8,39 +8,39 @@ class FileRepository(FileInterface):
         
         self.db = Session()
     
-    def find_by_id(self,file_id:int) -> File:
+    def find_by_id(self,file_id:int,token) -> FileEntity:
         
-        return self.db.query(File).filter(File.id == file_id).first()
+        return self.db.query(FileEntity).filter((FileEntity.id == file_id) & (FileEntity.owner_id == token.id )).first()
     
-    def find_by_email(self,file:File) -> File:
+    def find_by_email(self,file:FileEntity) -> FileEntity:
         
-        return self.db.query(File).filter(File.email == file.email).first()
+        return self.db.query(FileEntity).filter(FileEntity.email == file.email).first()
     
-    def find_one(self,criteria:dict) -> File:
+    def find_one(self,criteria:dict) -> FileEntity:
         
-        return self.db.query(File).filter_by(**criteria).first()
+        return self.db.query(FileEntity).filter_by(**criteria).first()
     
-    def get(self) -> list:
+    def get(self,owner) -> list:
         
-        return self.db.query(File).all()
+        return self.db.query(FileEntity).filter(FileEntity.owner_id == owner).all()
     
-    def create(self,file:File) -> File:
+    def create(self,file:FileEntity) -> FileEntity:
         
         self.db.add(file)
         
         self.db.commit()
         
-        return File
+        return file
     
-    def update(self, file:File) -> File:
+    def update(self, file:FileEntity) -> FileEntity:
         
         self.db.commit()
         
         self.db.refresh(file)
         
-        return File
+        return file
     
-    def delete(self,file:File) -> None:
+    def delete(self,file:FileEntity) -> None:
         
         self.db.delete(file)
         
