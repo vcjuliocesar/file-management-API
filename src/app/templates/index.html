@@ -1,9 +1,73 @@
 <!DOCTYPE html>
 <html>
-<head>
-    <title>Mi Página Jinja2</title>
-</head>
-<body>
-    <h1>Bienvenido a mi página HTML personalizada</h1>
-</body>
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Documentación de la API de Productos</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css"/>
+  </head>
+  <body>
+    <section class="hero is-primary">
+      <div class="hero-body">
+        <div class="container">
+          <h1 class="title">Documentación de File management API</h1>
+          <h2 class="subtitle">Explore los recursos disponibles en la API</h2>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <div class="columns is-multiline">
+          <div class="column is-one-third">
+            <div class="box">
+              <h3 class="title is-4">Crea un usuario</h3>
+              <p>Endpoint: <code>/api/v1/users</code></p>
+              <p>Método HTTP: <code>POST</code></p>
+              <p>Descripción: Crea un usuario.</p>
+            </div>
+          </div>
+
+          <div class="column is-one-third">
+            <div class="box">
+              <h3 class="title is-4">Obtener un usuario por ID</h3>
+              <p>Endpoint: <code>/api/v1/users/{id}</code></p>
+              <p>Método HTTP: <code>GET</code></p>
+              <p>Descripción: Obtiene un usuario por ID.</p>
+            </div>
+          </div>
+
+          <div class="column is-one-third">
+            <div class="box">
+              <h3 class="title is-4">Obtener un usuario por ID</h3>
+              <p>Endpoint: <code>/api/v1/users/{id}</code></p>
+              <p>Método HTTP: <code>GET</code></p>
+              <p>Descripción: Obtiene un usuario por ID.</p>
+            </div>
+          </div>
+
+          <div class="column is-one-third">
+            <div class="box">
+              <h3 class="title is-4">Obtener un usuario por ID</h3>
+              <p>Endpoint: <code>/api/v1/users/{id}</code></p>
+              <p>Método HTTP: <code>GET</code></p>
+              <p>Descripción: Obtiene un usuario por ID.</p>
+              <p>Response:</p>
+              <pre class="has-text-rigth is-family-monospace">
+                    {
+                    "id": 1,
+                    "password": "$2b$12$CbWwTX7JElMxmfp5PlvL2uQca.rG1eWlO1tntaXEJWXY5obWwHcfS",
+                    "is_admin": false,
+                    "email": "jhon.doe@example.com",
+                    "name": "Jhon Doe",
+                    "is_active": true
+                    }
+                </pre
+              >
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </body>
 </html>
