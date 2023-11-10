@@ -4,7 +4,7 @@
 
  ## Actual version
 
- The actual version is [v0.1.0]()
+ The actual version is [v1.1.0](https://github.com/vcjuliocesar/file-management-API/tags)
 ___
 
 ## Requirements
@@ -21,7 +21,9 @@ Follow these steps to set up and run the project on your local machine:
 
 ### Clone the repository
 
-`git clone git@github.com:vcjuliocesar/file-management-API.git`
+```git
+git clone git@github.com:vcjuliocesar/file-management-API.git
+```
 
 **Create enviroment file:** rename .env.example by .env
 
@@ -47,22 +49,32 @@ It is important that you have python and pip installed on your computer
 
 **Create a Virtual Environment**
 
-`python3 -m venv env`
+```sh
+python3 -m venv env
+```
 
 **Activate the Virtual Environment: On macOS/Linux**
 
-`source env/bin/activate`
+```sh
+source env/bin/activate
+```
 
 **On Windows**
 
-`.\env\Scripts\activate`
+```sh
+.\env\Scripts\activate
+```
 
 **Install dependencies**
 
-`pip3 install --no-cache-dir --upgrade requirements.txt`
+```sh
+pip3 install --no-cache-dir --upgrade requirements.txt
+```
 
 **Run the project**
 
-`uvicorn src.app.main:app --reload`
+```
+uvicorn src.app.main:app --reload
+```
 
 #### Happy Code! :smiley:
