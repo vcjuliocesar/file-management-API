@@ -1,17 +1,22 @@
 import os
+from functools import lru_cache
 from pydantic_settings import BaseSettings
+from dotenv import load_dotenv
 
+load_dotenv()
+
+#@lru_cache
 def get_env_file() -> str:
     env_file = os.getenv('ENV')
     return f".env.{env_file}" if env_file else ".env" 
 
-def get_enviroment():
-    return Enviroment;
 
-class Enviroment(BaseSettings):
+class EnviromentSettings(BaseSettings):
     API_VERSION:str
     APP_NAME:str
     APP_DESCRIPTION:str | None
+    MY_SECRET_KEY:str
+    TOKEN_EXPIRE_MINUTES:int
     DATABASE_ENGINE:str
     DATABASE_NAME:str
     DATABASE_USER:str
@@ -22,5 +27,6 @@ class Enviroment(BaseSettings):
     class Config:
         env_file:str = get_env_file()
         
-
-    
+#@lru_cache
+def get_enviroment_settinngs():
+    return EnviromentSettings;
