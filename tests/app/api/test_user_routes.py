@@ -84,7 +84,7 @@ def test_user_login(client: TestClient, user_service):
     user_service.delete(user_entity.id)
 
 
-def test_upload_file(client: TestClient, setUp: setUp,file_service,user_service):
+def test_upload_file(client: TestClient, setUp: setUp,user_service):
 
     header,owner = setUp
     
@@ -108,9 +108,9 @@ def test_upload_file(client: TestClient, setUp: setUp,file_service,user_service)
         
         assert response.status_code == status.HTTP_200_OK
     
-    file = file_service.find_one({"name":"document_test","owner_id":owner})
+    #file = file_service.find_one({"name":"document_test","owner_id":owner})
     
-    client.delete('/api/v1/files',params={"id":file.id,},headers=header)
+    #client.delete('/api/v1/files',params={"id":file.id,},headers=header)
     
     user_service.delete(owner)
     # 

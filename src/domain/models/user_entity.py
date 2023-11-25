@@ -18,4 +18,4 @@ class UserEntity(EntityBase):
     
     is_admin = Column(Boolean,default=False)
     
-    files = relationship("FileEntity",back_populates="owner")
+    files = relationship("FileEntity",back_populates="owner",cascade="all, delete-orphan")
