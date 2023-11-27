@@ -4,6 +4,7 @@ import tempfile
 from fastapi.testclient import TestClient
 from fastapi import status
 from src.app.main import app
+from src.domain.exceptions.file_already_exists_exception import FileAlreadyExistsException
 from src.domain.models.file_entity import FileEntity
 from src.infrastructure.schemas.user_schema import UserSchema
 from src.services.user_service import UserService
@@ -53,8 +54,6 @@ def setUp(client: TestClient, user_service) -> None:
 
     yield header, owner
 
-    # user_service.delete(user_entity.id)
-
 
 def search_file(file: str, path: str):
 
@@ -82,6 +81,7 @@ def test_it_return_an_exception_if_user_is_not_exists_or_is_not_valid(client: Te
     response = client.post('/api/v1/login', json=user)
 
     assert response.status_code == status.HTTP_401_UNAUTHORIZED
+
 
 
 def test_user_login(client: TestClient, user_service):

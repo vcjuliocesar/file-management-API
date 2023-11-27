@@ -20,7 +20,7 @@ app.description = env().APP_DESCRIPTION
 
 app.add_middleware(ErrorHandler)
 
-app.add_exception_handler(HTTPException,not_found_exception_handler)
+#app.add_exception_handler(HTTPException,not_found_exception_handler)
 
 app.include_router(index_router)
 
