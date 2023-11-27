@@ -1,12 +1,14 @@
+from fastapi import Depends
+from sqlalchemy.orm import Session
 from src.infrastructure.repositories.interfaces.user_interface import UserInterface
 from src.domain.models.user_entity import UserEntity as User
-from src.infrastructure.configs.database import Session
+from src.infrastructure.configs.database import get_db
 
 class UserRepository(UserInterface):
     
-    def __init__(self) -> None:
+    def __init__(self,db:Session = Depends(get_db)) -> None:
         
-        self.db = Session()
+        self.db = db
     
     def find_by_id(self,user_id:int) -> User:
         
