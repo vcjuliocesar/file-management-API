@@ -1,4 +1,4 @@
-from fastapi import HTTPException,status
+from fastapi import HTTPException,status,Depends
 from fastapi.security import HTTPBearer
 from starlette.requests import Request
 from datetime import datetime
@@ -10,9 +10,9 @@ from src.services.user_service import UserService
 
 class JWTBearer(HTTPBearer) :
     
-    async def __call__(self, request: Request):
+    async def __call__(self, request: Request,user_service:UserService = Depends()):
         
-        self.user_service = UserService()
+        self.user_service = user_service
         
         try:
             

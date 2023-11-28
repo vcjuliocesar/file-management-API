@@ -1,3 +1,4 @@
+from fastapi import Depends
 from src.domain.models.user_entity import UserEntity as User
 from src.domain.exceptions.user_already_exists_exception import UserAlreadyExistsException
 from src.domain.exceptions.user_not_found_exception import UserNotFoundException
@@ -7,9 +8,9 @@ from src.infrastructure.utils.password_utils import PasswordUtils
 
 class UserService:
     
-    def __init__(self) -> None:
+    def __init__(self,user_repository:UserRepository = Depends()) -> None:
         
-        self.user_repository = UserRepository()
+        self.user_repository = user_repository
     
     def get_all(self) -> list:
         
@@ -29,7 +30,7 @@ class UserService:
         
     def create(self,user:UserSchema) -> User:
         
-        exist = self.user_repository.find_one({"email":user.email})
+        exist = self.user_repository.find_by_email(user)
         
         if exist:
             

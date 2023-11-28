@@ -1,12 +1,14 @@
+from fastapi import Depends
+from sqlalchemy.orm import Session
 from src.infrastructure.repositories.interfaces.file_interface import FileInterface
 from src.domain.models.file_entity import FileEntity
-from src.infrastructure.configs.database import Session
+from src.infrastructure.configs.database import get_db
 
 class FileRepository(FileInterface):
     
-    def __init__(self) -> None:
+    def __init__(self,db:Session = Depends(get_db)) -> None:
         
-        self.db = Session()
+        self.db = db
     
     def find_by_id(self,file_id:int,token) -> FileEntity:
         

@@ -1,4 +1,5 @@
 import os
+from fastapi import Depends
 from src.domain.models.file_entity import FileEntity as File
 from src.domain.exceptions.user_already_exists_exception import UserAlreadyExistsException
 from src.domain.exceptions.user_not_found_exception import UserNotFoundException
@@ -11,9 +12,9 @@ from src.infrastructure.validations.file_validation import *
 
 class FileService:
     
-    def __init__(self) -> None:
+    def __init__(self,file_repository:FileRepository = Depends()) -> None:
         
-        self.file_repository = FileRepository()
+        self.file_repository = file_repository
     
     def get_all(self,owner:int) -> list:
         

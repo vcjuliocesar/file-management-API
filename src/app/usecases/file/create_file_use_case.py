@@ -1,12 +1,13 @@
+from fastapi import Depends
 from src.infrastructure.schemas.file_schema import FilePostRequest
 from src.services.file_service import FileService
 from src.domain.models.file_entity import FileEntity as File
 
 class CreateFileUseCase:
     
-    def __init__(self) -> None:
+    def __init__(self,file_service:FileService = Depends()) -> None:
         
-        self.file_service = FileService()
+        self.file_service = file_service
         
     def execute(self,name:str,description:str,file,token:str) -> File:
         
